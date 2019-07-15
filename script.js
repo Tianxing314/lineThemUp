@@ -1,19 +1,19 @@
 "use strict"
-const whiteWin = [  [3, 4, 5],
-					[6, 7, 8],
-					[0, 3, 6],
-					[1, 4, 7],
-					[2, 5, 8],
-					[0, 4, 8],
-					[2, 4, 6] ];
+const whiteWin = [[3, 4, 5],
+			   	  [6, 7, 8],
+				  [0, 3, 6],
+				  [1, 4, 7],
+				  [2, 5, 8],
+				  [0, 4, 8],
+				  [2, 4, 6]];
 
-const blackWin = [  [0, 1, 2],
-					[3, 4, 5],
-					[0, 3, 6],
-					[1, 4, 7],
-					[2, 5, 8],
-					[0, 4, 8],
-					[2, 4, 6] ];
+const blackWin = [[0, 1, 2],
+				  [3, 4, 5],
+				  [0, 3, 6],
+			   	  [1, 4, 7],
+			   	  [2, 5, 8],
+			   	  [0, 4, 8],
+				  [2, 4, 6]];
 
 const speed = 800;
 
@@ -33,6 +33,7 @@ var selectedPieces;
 var player;
 var isOver;
 
+//generate lines in board
 var board = document.getElementById("board");
 var ctx = board.getContext("2d");
 ctx.beginPath();
@@ -51,26 +52,9 @@ ctx.moveTo(0, 104);
 ctx.lineTo(208, 104);
 ctx.stroke();
 
-
-
 start_game();
+//replay button
 $("#replay").click(function() {replay_game();});
-/*var p = document.createElement('p');
-p.setAttribute("id", "p1");
-var p1 = document.getElementById('p1');
-console.log(p.id);
-console.log(p1);
-var node = document.createTextNode("para");
-p.appendChild(node);
-var w1 = document.getElementById('w1');
-w1.appendChild(p);*/
-
-/*
-var div = document.getElementById("test");
-console.log(div);
-div.innerHTML += "<div id='div2'> asd</div>";
-var div2 = document.getElementById('div2');
-console.log(div2);*/
 
 function Piece(color, position, element) {
 	this.element=element;
@@ -94,7 +78,6 @@ function start_game() {
 	update_position();
 	player = "white";
 	selectedPieces = new Array();
-
 }
 
 function replay_game() {
@@ -137,12 +120,9 @@ function replay_game() {
 			top: "272px"
 		}, 500);
 	start_game();
-	
-	//init pieces to strating position
 }
 
 //control the selector1 and selector2 image divs
-
 function update_selector() {
 	if (selectedPieces.length == 1) {
 		//hide selector2		
@@ -168,7 +148,6 @@ function click_select(piece) {
 	if (isOver == true) {
 		return;
 	}
-	//console.log($(piece.target).css("top"));
 	if (selectedPieces.length == 0) {
 		if (piece.target.color==player) {
 			selectedPieces[0] = piece.target;
@@ -206,7 +185,6 @@ function swap(piece1, piece2) {
 	let tempPosition = piece1.position;
 	piece1.position = piece2.position;
 	piece2.position = tempPosition;
-
 }
 
 function update_position() {
@@ -235,9 +213,6 @@ function turn(player) {
 	}
 	selectedPieces=[];
 	switch_player();
-
-	//checkWin();
-
 }
 
 function can_move(piece1, piece2) {
