@@ -31,6 +31,7 @@ var blackPosition;
 var transPosition;
 var selectedPieces;
 var player;
+var isOver;
 
 var board = document.getElementById("board");
 var ctx = board.getContext("2d");
@@ -53,7 +54,7 @@ ctx.stroke();
 
 
 start_game();
-$("#replay").click(function() {console.log("as"); replay_game();});
+$("#replay").click(function() {replay_game();});
 /*var p = document.createElement('p');
 p.setAttribute("id", "p1");
 var p1 = document.getElementById('p1');
@@ -79,6 +80,7 @@ function Piece(color, position, element) {
 }
 
 function start_game() {
+	isOver = false;
 	document.getElementById("endgame").style.display = "none";
 	w1 = new Piece("white", 0, document.getElementById('w1'));
 	w2 = new Piece("white", 1, document.getElementById('w2'));
@@ -97,6 +99,7 @@ function start_game() {
 
 function replay_game() {
 	document.getElementById("endgame").style.display = "none";
+	update_selector();
 	$(w1.element).animate({
 			marginLeft: "-142px",
 			top: "62px"
@@ -138,20 +141,49 @@ function replay_game() {
 	//init pieces to strating position
 }
 
+//control the selector1 and selector2 image divs
+
+function update_selector() {
+	if (selectedPieces.length == 1) {
+		//hide selector2		
+		$("#selector2").css("visibility","hidden");
+		//move and show selector1
+		$("#selector1").css("margin-left", $(selectedPieces[0]).css("margin-left"));
+		$("#selector1").css("top", $(selectedPieces[0]).css("top"));
+		$("#selector1").css("visibility", "visible");
+	}
+	else if (selectedPieces.length == 2) {
+		$("#selector2").css("margin-left", $(selectedPieces[1]).css("margin-left"));
+		$("#selector2").css("top", $(selectedPieces[1]).css("top"));
+		$("#selector2").css("visibility", "visible");
+	}
+	else {
+		$("#selector1").css("visibility","hidden");
+		$("#selector2").css("visibility","hidden");
+	}
+}
+
+
 function click_select(piece) {
+	if (isOver == true) {
+		return;
+	}
 	//console.log($(piece.target).css("top"));
-	if (selectedPieces.length==0) {
+	if (selectedPieces.length == 0) {
 		if (piece.target.color==player) {
 			selectedPieces[0] = piece.target;
+			update_selector();
 		}
 	} 
 	else if (selectedPieces.length==1) {
 		if (piece.target.color==player) {
 			selectedPieces[0] = piece.target;
+			update_selector()
 		}
 		else if (piece.target.color=="transparent") {
 			if (can_move(selectedPieces[0], piece.target)){
 				selectedPieces[1] = piece.target;
+				update_selector()
 			}	
 		}
 	}
@@ -279,5 +311,5 @@ function check_win() {
 function end_game() {
 	document.getElementById("endgame").style.display = "block";
 	document.getElementById("endgame").innerHTML = player + " Wins!";
-	//replay_game();
+	isOver = true;
 }

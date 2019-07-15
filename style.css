@@ -20,15 +20,30 @@
 	font-size: 200%;
 	top: 400px;
 	cursor: pointer;
+	z-index: 5;
 }
 
+.selector {
+	visibility: hidden;
+	position: absolute;
+	width: 84px;
+	height: 84px;
+	z-index: 1;
+	left: 50%;
+	margin-left: 0;
+	top: 0;
+}
+
+
+/*
 td {
 	border: 2px solid #4287f5;
 	height: 100px;
 	width: 100px;
 	background-color: #b5d4ff;
-	/*cursor: pointer;*/
+	cursor: pointer;
 }
+*/
 
 /*
 table {
